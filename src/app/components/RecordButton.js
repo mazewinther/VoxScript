@@ -15,7 +15,7 @@ export default function RecordButton({ file, handleFileChange }) {
         .then(stream => {
           audioStream.current = stream;
 
-          const options = { mimeType: 'audio/webm' };
+          const options = { mimeType: 'audio/webm;codecs=opus' };
           recorder.current = new MediaRecorder(stream, options);
 
           const chunks = [];
@@ -25,6 +25,7 @@ export default function RecordButton({ file, handleFileChange }) {
             const newFile = new File([blob], `recording-${Date.now()}.webm`, { type: 'audio/webm' });
             handleFileChange({ 0: newFile, length: 1 }, true);
 
+            // Stop the audio stream
             if (audioStream.current) {
               audioStream.current.getTracks().forEach(track => track.stop());
               audioStream.current = null;
@@ -34,11 +35,7 @@ export default function RecordButton({ file, handleFileChange }) {
           recorder.current.start();
           setIsRecording(true);
         })
-        .catch((error) => {
-          console.error("Error accessing media devices.", error);
-        });
-    } else {
-      console.error("MediaDevices interface not available.");
+        .catch(console.error);
     }
   };
 
