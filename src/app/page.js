@@ -55,7 +55,7 @@ export default function Home() {
         VoxScript AI
       </h1>
       <p className="w-full max-w-md text-gray-500 mb-4 text-center">
-        
+        Convert speech into <strong>formatted text</strong> with lists, bolding, and headings. Refine with AI.
       </p>
       <RecordButton file={file} handleFileChange={(files) => handleFileChange(files, true)} />
       <FileDrop handleFileChange={handleFileChange} file={file} showToast={showToast} />
